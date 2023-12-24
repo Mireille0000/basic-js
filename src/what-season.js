@@ -13,8 +13,13 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function getSeason(date) {
   const error = new Error("Invalid date!");
-  // const regex = /[0-9][0-9]\-[0-9][0-9]\-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z/;
-  // && regex.test(JSON.stringify(date)
+  if (arguments.length === 0) {
+    return 'Unable to determine the time of year!';
+  }
+
+  if (date.hasOwnProperty('toString')) {
+    throw error;
+  }
 
   if (date instanceof Date && !isNaN(date)) {
     const season = date.getMonth();
@@ -55,15 +60,13 @@ function getSeason(date) {
     case 11:
       return 'winter';
       break;
-      // default:
-      // throw error;
-      // break;
-  }
-  }
-  if (!arguments.length) {
-    return 'Unable to determine the time of year!';
+      default:
+      throw error;
+      break;
+    }
   } 
-    throw error;
+    
+  throw error;
 }
 
 module.exports = {
